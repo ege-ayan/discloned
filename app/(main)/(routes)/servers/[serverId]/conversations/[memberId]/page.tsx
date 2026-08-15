@@ -43,7 +43,7 @@ const MemberIdPage = async ({ params, searchParams }: MemberIdPageProps) => {
 
   const conversation = await getOrCreateConversation(
     currentMember.id,
-    memberId
+    memberId,
   );
 
   if (!conversation) {

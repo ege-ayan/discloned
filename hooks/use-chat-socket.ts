@@ -1,4 +1,4 @@
-import { Member, Message, Profile } from "@prisma/client";
+import { Member, Message, Profile } from "@/lib/prisma";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useSocket } from "@/components/providers/socket-provider";

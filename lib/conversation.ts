@@ -2,7 +2,7 @@ import { db } from "@/lib/db";
 
 export const getOrCreateConversation = async (
   memberOneId: string,
-  memberTwoId: string
+  memberTwoId: string,
 ) => {
   let conversation =
     (await findConversation(memberOneId, memberTwoId)) ||
@@ -48,7 +48,7 @@ const findConversation = async (memberOneId: string, memberTwoId: string) => {
 
 const createNewConversation = async (
   memberOneId: string,
-  memberTwoId: string
+  memberTwoId: string,
 ) => {
   try {
     return await db.conversation.create({

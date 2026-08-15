@@ -1,7 +1,7 @@
 "use client";
 
 import { ServerWithMembersWithProfiles } from "@/types";
-import { MemberRole } from "@prisma/client";
+import { MemberRole } from "@/lib/prisma";
 import {
   DropdownMenu,
   DropdownMenuItem,

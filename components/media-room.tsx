@@ -25,7 +25,7 @@ export const MediaRoom = ({ chatId, video, audio }: MediaRoomProps) => {
     const fetchToken = async () => {
       try {
         const resp = await fetch(
-          `/api/livekit?room=${chatId}&username=${encodeURIComponent(name)}`
+          `/api/livekit?room=${chatId}&username=${encodeURIComponent(name)}`,
         );
         if (!resp.ok) {
           setError("Failed to retrieve token");

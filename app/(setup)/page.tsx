@@ -1,9 +1,13 @@
-import { initialProfile } from "@/lib/initial-profile";
+import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-import { db } from "@/lib/db";
+
 import { InitialModal } from "@/components/modals/initial-modal";
+import { db } from "@/lib/db";
+import { initialProfile } from "@/lib/initial-profile";
 
 const SetupPage = async () => {
+  await auth.protect();
+
   const profile = await initialProfile();
 
   const server = await db.server.findFirst({

@@ -26,9 +26,9 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
 import FileUpload from "@/components/file-upload";
 import { useRouter } from "next/navigation";
+import { useMounted } from "@/hooks/use-mounted";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -40,13 +40,9 @@ const formSchema = z.object({
 });
 
 export const InitialModal = () => {
-  const [isMounted, setIsMounted] = useState(false);
+  const isMounted = useMounted();
 
   const router = useRouter();
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
 
   const form = useForm({
     resolver: zodResolver(formSchema),

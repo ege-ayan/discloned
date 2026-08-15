@@ -1,6 +1,6 @@
 "use client";
 
-import { Member, MemberRole, Profile } from "@prisma/client";
+import { Member, MemberRole, Profile } from "@/lib/prisma";
 import { UserAvatar } from "@/components/user-avatar";
 import { ActionTooltip } from "@/components/action-tooltip";
 import { Crown, Edit, FileIcon, ShieldCheck, Trash } from "lucide-react";
@@ -183,7 +183,7 @@ export const ChatItem = ({
               className={cn(
                 "text-sm text-zinc-600 dark:text-zinc-300",
                 deleted &&
-                  "italic text-zinc-500 dark:text-zinc-400 text-xs mt-1"
+                  "italic text-zinc-500 dark:text-zinc-400 text-xs mt-1",
               )}
             >
               {content}

@@ -8,6 +8,8 @@ interface InviteCodePageProps {
 }
 
 const InviteCodePage = async ({ params }: InviteCodePageProps) => {
+  await auth.protect();
+
   const profile = await currentProfile();
   const { redirectToSignIn } = await auth();
   const inviteCode = (await params).inviteCode;

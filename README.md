@@ -1,151 +1,129 @@
 # Discloned
 
-A full-stack, real-time clone of Discord built with modern web technologies. This application replicates core Discord features including servers, channels (text, voice, video), direct messaging, member roles, and file attachments.
-
-## ✨ Features
-
-- **Server Management**: Create and manage servers, generate invite links.
-- **Channels**: Create text, audio, and video channels within servers.
-- **Real-time Chat**: Instant messaging in channels and direct messages with Socket.io.
-- **Audio/Video Calls**: WebRTC-based communication using LiveKit.
-- **User Authentication**: Secure user sign-up and sign-in with Clerk.
-- **Member Roles**: Assign roles (Admin, Moderator, Guest) to server members.
-- **File Uploads**: Send file attachments in messages via UploadThing.
-- **Rich Media**: Emoji support and message formatting.
-- **Modern UI**: Responsive and beautiful interface built with Tailwind CSS and Shadcn/UI.
-
-## 🛠️ Technologies Used
-
-This project leverages a powerful and modern stack for a robust and scalable application.
-
-- **Framework**: [Next.js 15](https://nextjs.org/) (with App Router & Turbopack)
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **UI Components**: [Shadcn/UI](https://ui.shadcn.com/), [Radix UI](https://www.radix-ui.com/), [Lucide React](https://lucide.dev/guide/packages/lucide-react) for icons.
-- **Database ORM**: [Prisma](https://www.prisma.io/)
-- **Database**: [PostgreSQL](https://www.postgresql.org/) (e.g., via [Supabase](https://supabase.com/))
-- **Authentication**: [Clerk](https://clerk.com/)
-- **Real-time Communication**:
-  - [Socket.io](https://socket.io/) for messaging.
-  - [LiveKit](https://livekit.io/) for audio/video streams.
-- **File Uploads**: [UploadThing](https://uploadthing.com/)
-- **State Management**: [Zustand](https://github.com/pmndrs/zustand)
-- **Form Handling**: [React Hook Form](https://react-hook-form.com/) & [Zod](https://zod.dev/) for validation.
-- **Data Fetching**: [TanStack Query (React Query)](https://tanstack.com/query/latest)
-
-## 🗄️ Database Architecture
-
-The database schema is designed to model the core entities of a chat application like Discord. Prisma is used to interact with the PostgreSQL database, ensuring type-safe queries.
-
-Here are the primary models:
-
-- **`Profile`**: Represents a registered user.
-- **`Server`**: A server/guild that contains channels and members.
-- **`Member`**: Represents a user's connection to a server, including their role.
-- **`Channel`**: A text, audio, or video channel within a server.
-- **`Message`**: A message sent within a channel.
-- **`Conversation`**: A private conversation between two members.
-- **`DirectMessage`**: A message sent within a private conversation.
-
-Below is an Entity-Relationship Diagram illustrating the database schema:
-
-```mermaid
-erDiagram
-    Profile ||--o{ Server : "owns"
-    Profile ||--o{ Member : "is"
-    Server ||--o{ Member : "has"
-    Server ||--o{ Channel : "has"
-    Member ||--o{ Message : "sends"
-    Channel ||--o{ Message : "contains"
-    Member ||--o{ Conversation : "initiates/receives"
-    Member ||--o{ DirectMessage : "sends"
-    Conversation ||--o{ DirectMessage : "contains"
-```
-
-## 🚀 Getting Started
-
-Follow these instructions to set up the project locally for development and testing.
-
-### Prerequisites
-
-- [Node.js](https://nodejs.org/en/) (v20.x or higher recommended)
-- `npm`, `yarn`, or `pnpm` package manager.
-- A [PostgreSQL](https://www.postgresql.org/download/) database. You can easily set one up for free on [Supabase](https://supabase.com/).
-- Accounts for [Clerk](https://clerk.com/), [UploadThing](https://uploadthing.com/), and [LiveKit](https://livekit.io/).
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/ege-ayan/Discloned.git
-cd discloned
-```
-
-### 2. Install Dependencies
-
-Install the project dependencies using your preferred package manager:
+Real-time Discord-style chat: servers, channels, DMs, roles, and voice/video. Next.js App Router, PostgreSQL, Clerk, Socket.IO, and LiveKit.
 
 ```bash
 npm install
-# or
-yarn install
-# or
-pnpm install
+cp .env.example .env
+npx prisma db push
+npm run dev
 ```
 
-### 3. Set Up Environment Variables
+Open [http://localhost:3000](http://localhost:3000).
 
-Create a file named `.env.local` in the root of the project by copying the example below. Fill in the values with your credentials from the services mentioned in the prerequisites.
+## Features
+
+| Area          | What it does                            |
+| ------------- | --------------------------------------- |
+| Servers       | Create, edit, invite, leave, delete     |
+| Channels      | Text, audio, and video channels         |
+| Chat          | Channel messages and DMs over Socket.IO |
+| Voice / video | LiveKit rooms                           |
+| Members       | Admin, moderator, guest                 |
+| Files         | UploadThing attachments                 |
+| UI            | Tailwind CSS + shadcn/ui, dark mode     |
+
+## Stack
+
+- **App:** Next.js 16, React 19, TypeScript
+- **Data:** PostgreSQL, Prisma 7
+- **Auth:** Clerk
+- **Realtime:** Socket.IO (messages), LiveKit (A/V)
+- **Uploads:** UploadThing
+- **Client state:** Zustand, TanStack Query, React Hook Form, Zod 4
+
+## Data model
+
+```mermaid
+erDiagram
+    Profile ||--o{ Server : owns
+    Profile ||--o{ Member : is
+    Server ||--o{ Member : has
+    Server ||--o{ Channel : has
+    Member ||--o{ Message : sends
+    Channel ||--o{ Message : contains
+    Member ||--o{ Conversation : joins
+    Conversation ||--o{ DirectMessage : contains
+```
+
+## Setup
+
+**Need:** Node.js 22+, npm, a PostgreSQL database, and accounts for [Clerk](https://clerk.com/), [UploadThing](https://uploadthing.com/), and [LiveKit](https://livekit.io/).
+
+### 1. Install
+
+```bash
+git clone https://github.com/ege-ayan/discloned.git
+cd discloned
+npm install
+```
+
+This repo uses **npm** only (`package-lock.json`). Do not add a pnpm or yarn lockfile.
+
+### 2. Environment
+
+Copy [`.env.example`](.env.example) to `.env` and fill in real values:
 
 ```env
-# .env.local
+DATABASE_URL="postgresql://USER:PASSWORD@HOST:5432/discloned?sslmode=require"
+DIRECT_URL="postgresql://USER:PASSWORD@HOST:5432/discloned?sslmode=require"
 
-# --- Database ---
-# Get from your PostgreSQL provider (e.g., Supabase)
-# The `directUrl` is for Prisma migrations and studio, while `DATABASE_URL` is for the application connection pool.
-DATABASE_URL="postgresql://<user>:<password>@<host>/<dbname>?sslmode=require"
-DIRECT_URL="postgresql://<user>:<password>@<host>/<dbname>?pgbouncer=true&connection_limit=1"
-
-# --- Authentication (Clerk) ---
-# Get these from your Clerk dashboard: https://dashboard.clerk.com/
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
 CLERK_SECRET_KEY=
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
 
-# --- File Uploads (UploadThing) ---
-# Get these from your UploadThing dashboard: https://uploadthing.com/
-UPLOADTHING_SECRET=
-UPLOADTHING_APP_ID=
+UPLOADTHING_TOKEN=
 
-# --- Real-time Video/Audio (LiveKit) ---
-# Get these from your LiveKit Cloud project settings: https://cloud.livekit.io/
 LIVEKIT_API_KEY=
 LIVEKIT_API_SECRET=
-NEXT_PUBLIC_LIVEKIT_URL="https://<your-project-slug>.livekit.cloud/"
+NEXT_PUBLIC_LIVEKIT_URL=
 
-# --- Application URL ---
-# The canonical URL of your deployment.
-# Required for webhooks and other absolute URL generation.
-# Use http://localhost:3000 for local development.
-NEXT_PUBLIC_APP_URL="http://localhost:3000"
+NEXT_PUBLIC_SITE_URL="http://localhost:3000"
 ```
 
-### 4. Set Up the Database
+`DATABASE_URL` is the app pool. `DIRECT_URL` is used by Prisma migrate/push (no pgbouncer). In Clerk, set the sign-in/sign-up paths to `/sign-in` and `/sign-up`.
 
-Run the following command to sync the Prisma schema with your PostgreSQL database. This will create the necessary tables and relations.
+### 3. Database
 
 ```bash
 npx prisma db push
 ```
 
-### 5. Run the Development Server
-
-Now you can start the development server:
+### 4. Develop
 
 ```bash
 npm run dev
 ```
 
-The application should now be running at [http://localhost:3000](http://localhost:3000).
+## Scripts
 
----
+| Script                 | Purpose                              |
+| ---------------------- | ------------------------------------ |
+| `npm run dev`          | Next.js + Turbopack                  |
+| `npm test`             | Vitest unit tests                    |
+| `npm run test:watch`   | Vitest watch mode                    |
+| `npm run typecheck`    | `tsc --noEmit`                       |
+| `npm run lint`         | ESLint                               |
+| `npm run format`       | Prettier write                       |
+| `npm run format:check` | Prettier check                       |
+| `npm run ci`           | Lint, format check, typecheck, tests |
+| `npm run build`        | Production build                     |
+| `npm start`            | Serve the production build           |
 
-Happy coding!
+`prisma generate` runs on `npm install` (`postinstall`).
+
+## CI and releases
+
+Push to `main` runs Prisma validate, lint, format check, typecheck, tests, and production build.
+
+Tag `v*` (or run the **Release** workflow) publishes a GitHub Release with a source archive and `SHA256SUMS.txt`.
+
+```bash
+git tag -a v0.1.0 -m "Discloned 0.1.0"
+git push origin v0.1.0
+```
+
+## License
+
+MIT — see [LICENSE](LICENSE).

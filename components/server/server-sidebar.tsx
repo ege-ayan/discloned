@@ -1,7 +1,7 @@
 import { currentProfile } from "@/lib/current-profile";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
-import { ChannelType, MemberRole } from "@prisma/client";
+import { ChannelType, MemberRole } from "@/lib/prisma";
 import { ServerHeader } from "./server-header";
 import { ServerSearch } from "./server-search";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -56,16 +56,16 @@ export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
   });
 
   const textChannels = server?.channels.filter(
-    (channel) => channel.type === ChannelType.TEXT
+    (channel) => channel.type === ChannelType.TEXT,
   );
   const audioChannels = server?.channels.filter(
-    (channel) => channel.type === ChannelType.AUDIO
+    (channel) => channel.type === ChannelType.AUDIO,
   );
   const videoChannels = server?.channels.filter(
-    (channel) => channel.type === ChannelType.VIDEO
+    (channel) => channel.type === ChannelType.VIDEO,
   );
   const members = server?.members.filter(
-    (member) => member.profileId !== profile.id
+    (member) => member.profileId !== profile.id,
   );
 
   if (!server) {
@@ -73,7 +73,7 @@ export const ServerSidebar = async ({ serverId }: ServerSidebarProps) => {
   }
 
   const role = server.members.find(
-    (member) => member.profileId === profile.id
+    (member) => member.profileId === profile.id,
   )?.role;
 
   return (

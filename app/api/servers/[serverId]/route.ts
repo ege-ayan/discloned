@@ -8,7 +8,7 @@ export async function PATCH(
     params,
   }: {
     params: Promise<{ serverId: string }>;
-  }
+  },
 ) {
   try {
     const serverId = (await params).serverId;
@@ -41,7 +41,7 @@ export async function DELETE(
     params,
   }: {
     params: Promise<{ serverId: string }>;
-  }
+  },
 ) {
   try {
     const serverId = (await params).serverId;

@@ -11,9 +11,9 @@ import { cn } from "@/lib/utils";
 const font = Open_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Discord Clone",
-  description: "Open Source Discord Clone",
-  authors: [],
+  title: "Discloned",
+  description:
+    "Real-time Discord-style chat with servers, channels, DMs, and voice.",
 };
 
 export default function RootLayout({

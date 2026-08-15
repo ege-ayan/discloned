@@ -37,7 +37,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuSubTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MemberRole } from "@prisma/client";
+import { MemberRole } from "@/lib/prisma";
 import { useRouter } from "next/navigation";
 
 const roleIconMap = {

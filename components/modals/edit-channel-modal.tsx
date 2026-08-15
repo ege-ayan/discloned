@@ -34,7 +34,7 @@ import { Button } from "@/components/ui/button";
 
 import { useRouter } from "next/navigation";
 import { useModal } from "@/hooks/use-modal-store";
-import { ChannelType } from "@prisma/client";
+import { ChannelType } from "@/lib/prisma";
 import { useEffect } from "react";
 
 const formSchema = z.object({
